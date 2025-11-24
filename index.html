@@ -32,14 +32,8 @@
     }
     
     @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .success-icon {
@@ -83,7 +77,7 @@
     .step {
       display: flex;
       align-items: start;
-      margin: 20px 0;
+      margin: 15px 0;
       padding: 15px;
       background: white;
       border-radius: 8px;
@@ -117,30 +111,6 @@
     .step-desc {
       color: #6c757d;
       font-size: 14px;
-    }
-    
-    .visual-guide {
-      background: #e7f3ff;
-      border-radius: 12px;
-      padding: 20px;
-      margin: 20px 0;
-    }
-    
-    .visual-guide h3 {
-      color: #004085;
-      margin-bottom: 15px;
-      font-size: 18px;
-    }
-    
-    .button-example {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      border: 2px solid #667eea;
-      font-size: 14px;
-      color: #495057;
-      margin: 10px 0;
-      font-weight: 600;
     }
     
     .features {
@@ -185,8 +155,6 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
-      text-decoration: none;
-      display: inline-block;
     }
     
     .close-btn:hover {
@@ -194,17 +162,16 @@
       box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
     }
     
-    .note {
-      background: #fff3cd;
-      border: 2px solid #ffc107;
+    .status {
+      background: #d4edda;
+      border: 2px solid #28a745;
       border-radius: 8px;
       padding: 15px;
       margin: 20px 0;
-      color: #856404;
-      font-size: 14px;
+      color: #155724;
     }
     
-    .note strong {
+    .status strong {
       display: block;
       margin-bottom: 5px;
       font-size: 16px;
@@ -217,9 +184,9 @@
     <h1>Payment Successful!</h1>
     <p class="subtitle">Thank you for upgrading to Pro</p>
     
-    <div class="note">
-      <strong>📌 One More Step Required!</strong>
-      To activate your Pro features, please follow the steps below.
+    <div class="status">
+      <strong>✅ Payment Confirmed</strong>
+      Your payment has been processed successfully!
     </div>
     
     <div class="steps">
@@ -228,51 +195,34 @@
       <div class="step">
         <div class="step-number">1</div>
         <div class="step-content">
-          <div class="step-title">Return to Extension</div>
-          <div class="step-desc">Close this page and open the "On This Day" extension in your browser</div>
+          <div class="step-title">Close This Page</div>
+          <div class="step-desc">Click the button below to close this page</div>
         </div>
       </div>
       
       <div class="step">
         <div class="step-number">2</div>
         <div class="step-content">
-          <div class="step-title">Open Settings</div>
-          <div class="step-desc">Click the ⚙️ Settings icon in the top right corner of the extension</div>
+          <div class="step-title">Return to Extension</div>
+          <div class="step-desc">Open the "On This Day" extension in your browser</div>
         </div>
       </div>
       
       <div class="step">
         <div class="step-number">3</div>
         <div class="step-content">
-          <div class="step-title">Manage License</div>
-          <div class="step-desc">Scroll to the bottom and click the "Manage License" button</div>
+          <div class="step-title">Activate Automatically</div>
+          <div class="step-desc">You'll see a confirmation popup - click "OK" to activate Pro</div>
         </div>
       </div>
       
       <div class="step">
         <div class="step-number">4</div>
         <div class="step-content">
-          <div class="step-title">Confirm Activation</div>
-          <div class="step-desc">Click "OK" in the confirmation dialog</div>
-        </div>
-      </div>
-      
-      <div class="step">
-        <div class="step-number">5</div>
-        <div class="step-content">
           <div class="step-title">Enjoy Pro! ✨</div>
-          <div class="step-desc">Your Pro features are now active!</div>
+          <div class="step-desc">All Pro features are now active!</div>
         </div>
       </div>
-    </div>
-    
-    <div class="visual-guide">
-      <h3>🔍 What to Look For:</h3>
-      <div class="button-example">⚙️ Settings</div>
-      <div style="text-align: center; color: #495057; margin: 10px 0;">↓</div>
-      <div class="button-example">🔐 Manage License</div>
-      <div style="text-align: center; color: #495057; margin: 10px 0;">↓</div>
-      <div class="button-example">✨ Pro Activated!</div>
     </div>
     
     <div class="features">
@@ -289,12 +239,56 @@
       </ul>
     </div>
     
-    <button class="close-btn" onclick="window.close()">Close This Page</button>
+    <button class="close-btn" onclick="closeAndActivate()">Close & Activate Pro</button>
   </div>
   
   <script>
-    console.log('Payment successful! Extension ID: cghomjpgeelkfnaomdfolmlfnciiflip');
-    console.log('User should manually activate in extension.');
+    // Extension ID
+    const EXTENSION_ID = 'cghomjpgeelkfnaomdfolmlfnciiflip';
+    
+    // Set payment completion flag when page loads
+    window.addEventListener('load', () => {
+      console.log('Payment successful! Setting completion flag...');
+      
+      // Try to set the flag via external message
+      if (typeof chrome !== 'undefined' && chrome.runtime) {
+        chrome.runtime.sendMessage(
+          EXTENSION_ID,
+          { action: 'paymentCompleted' },
+          (response) => {
+            if (chrome.runtime.lastError) {
+              console.log('Note: Extension will detect payment on next open');
+            } else {
+              console.log('Payment flag set successfully');
+            }
+          }
+        );
+      }
+    });
+    
+    function closeAndActivate() {
+      // One more attempt to set the flag
+      if (typeof chrome !== 'undefined' && chrome.runtime) {
+        chrome.runtime.sendMessage(
+          EXTENSION_ID,
+          { action: 'paymentCompleted' },
+          () => {
+            // Close the window regardless of response
+            window.close();
+            
+            // If window.close() doesn't work
+            if (!window.closed) {
+              alert('Please close this tab manually and reopen the extension to activate Pro!');
+            }
+          }
+        );
+      } else {
+        window.close();
+        if (!window.closed) {
+          alert('Please close this tab manually and reopen the extension to activate Pro!');
+        }
+      }
+    }
   </script>
 </body>
 </html>
