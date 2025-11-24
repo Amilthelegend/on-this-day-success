@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Successful - On This Day Pro</title>
+  <title>Payment Successful - Your License Key</title>
   <style>
     * {
       margin: 0;
@@ -24,8 +24,8 @@
     .container {
       background: white;
       border-radius: 20px;
-      padding: 60px 40px;
-      max-width: 600px;
+      padding: 50px 40px;
+      max-width: 650px;
       text-align: center;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
       animation: slideUp 0.5s ease;
@@ -49,29 +49,89 @@
     
     h1 {
       color: #667eea;
-      font-size: 36px;
+      font-size: 38px;
       margin-bottom: 10px;
+      font-weight: 700;
     }
     
     .subtitle {
       color: #6c757d;
       font-size: 18px;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
     
-    .steps {
-      background: #f8f9fa;
+    .key-box {
+      background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+      border: 4px solid #ffc107;
+      border-radius: 15px;
+      padding: 30px;
+      margin: 30px 0;
+    }
+    
+    .key-box h2 {
+      color: #856404;
+      font-size: 24px;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+    
+    .license-key {
+      background: white;
+      border: 3px dashed #667eea;
       border-radius: 12px;
+      padding: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 20px;
+      font-weight: bold;
+      color: #667eea;
+      margin: 15px 0;
+      word-break: break-all;
+      cursor: pointer;
+      transition: all 0.3s;
+      user-select: all;
+    }
+    
+    .license-key:hover {
+      background: #f8f9fa;
+      border-color: #764ba2;
+    }
+    
+    .copy-btn {
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+    
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+    }
+    
+    .copy-btn.copied {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .steps-box {
+      background: #f8f9fa;
+      border-radius: 15px;
       padding: 30px;
       margin: 30px 0;
       text-align: left;
     }
     
-    .steps h2 {
+    .steps-box h3 {
       color: #495057;
-      font-size: 24px;
+      font-size: 22px;
       margin-bottom: 20px;
       text-align: center;
+      font-weight: 600;
     }
     
     .step {
@@ -80,7 +140,8 @@
       margin: 15px 0;
       padding: 15px;
       background: white;
-      border-radius: 8px;
+      border-radius: 10px;
+      border-left: 4px solid #667eea;
     }
     
     .step-number {
@@ -93,6 +154,7 @@
       align-items: center;
       justify-content: center;
       font-weight: bold;
+      font-size: 18px;
       flex-shrink: 0;
       margin-right: 15px;
     }
@@ -113,44 +175,28 @@
       font-size: 14px;
     }
     
-    .features {
-      text-align: left;
-      margin: 30px 0;
-      background: #f8f9fa;
-      padding: 20px;
+    .warning {
+      background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+      border: 3px solid #dc3545;
       border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      color: #721c24;
     }
     
-    .features h3 {
-      color: #495057;
-      margin-bottom: 15px;
+    .warning strong {
+      display: block;
       font-size: 18px;
-    }
-    
-    .features ul {
-      list-style: none;
-    }
-    
-    .features li {
-      padding: 8px 0;
-      color: #6c757d;
-      font-size: 15px;
-    }
-    
-    .features li:before {
-      content: "✅ ";
-      color: #28a745;
-      font-weight: bold;
-      margin-right: 8px;
+      margin-bottom: 8px;
     }
     
     .close-btn {
-      margin-top: 30px;
-      padding: 14px 30px;
+      margin-top: 20px;
+      padding: 15px 35px;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
@@ -159,22 +205,7 @@
     
     .close-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-    }
-    
-    .status {
-      background: #d4edda;
-      border: 2px solid #28a745;
-      border-radius: 8px;
-      padding: 15px;
-      margin: 20px 0;
-      color: #155724;
-    }
-    
-    .status strong {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 16px;
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
     }
   </style>
 </head>
@@ -182,112 +213,124 @@
   <div class="container">
     <div class="success-icon">🎉</div>
     <h1>Payment Successful!</h1>
-    <p class="subtitle">Thank you for upgrading to Pro</p>
+    <p class="subtitle">Thank you for upgrading to Pro - $2.99</p>
     
-    <div class="status">
-      <strong>✅ Payment Confirmed</strong>
-      Your payment has been processed successfully!
+    <div class="key-box">
+      <h2>🔑 Your License Key</h2>
+      <p style="color: #856404; margin-bottom: 15px;">Copy this key to activate Pro features:</p>
+      <div class="license-key" id="licenseKey" onclick="copyKey()">
+        Generating your key...
+      </div>
+      <button class="copy-btn" id="copyBtn" onclick="copyKey()">
+        📋 Copy License Key
+      </button>
     </div>
     
-    <div class="steps">
-      <h2>Activate Your Pro Features</h2>
+    <div class="warning">
+      <strong>⚠️ IMPORTANT - Save This Key!</strong>
+      This is your only copy of the license key. Save it somewhere safe. You'll need it to activate Pro features.
+    </div>
+    
+    <div class="steps-box">
+      <h3>Activate Pro in 3 Easy Steps</h3>
       
       <div class="step">
         <div class="step-number">1</div>
         <div class="step-content">
-          <div class="step-title">Close This Page</div>
-          <div class="step-desc">Click the button below to close this page</div>
+          <div class="step-title">Copy Your License Key</div>
+          <div class="step-desc">Click the key above or the "Copy" button</div>
         </div>
       </div>
       
       <div class="step">
         <div class="step-number">2</div>
         <div class="step-content">
-          <div class="step-title">Return to Extension</div>
-          <div class="step-desc">Open the "On This Day" extension in your browser</div>
+          <div class="step-title">Open the Extension</div>
+          <div class="step-desc">Click "On This Day" in your Chrome toolbar</div>
         </div>
       </div>
       
       <div class="step">
         <div class="step-number">3</div>
         <div class="step-content">
-          <div class="step-title">Activate Automatically</div>
-          <div class="step-desc">You'll see a confirmation popup - click "OK" to activate Pro</div>
-        </div>
-      </div>
-      
-      <div class="step">
-        <div class="step-number">4</div>
-        <div class="step-content">
-          <div class="step-title">Enjoy Pro! ✨</div>
-          <div class="step-desc">All Pro features are now active!</div>
+          <div class="step-title">Enter License Key</div>
+          <div class="step-desc">Click ⚙️ Settings → Paste your key → Click "Activate"</div>
         </div>
       </div>
     </div>
     
-    <div class="features">
-      <h3>Your Pro Features:</h3>
-      <ul>
-        <li>Dedicated Favorites Tab</li>
-        <li>Save Unlimited Events</li>
-        <li>Copy Favorites to Clipboard</li>
-        <li>Export as Text File</li>
-        <li>Export as PDF</li>
-        <li>Beautiful Themes (Dark, Vintage)</li>
-        <li>View up to 20 Events</li>
-        <li>Category Filters</li>
-      </ul>
-    </div>
-    
-    <button class="close-btn" onclick="closeAndActivate()">Close & Activate Pro</button>
+    <button class="close-btn" onclick="window.close()">Close & Activate Now</button>
   </div>
   
   <script>
-    // Extension ID
-    const EXTENSION_ID = 'cghomjpgeelkfnaomdfolmlfnciiflip';
-    
-    // Set payment completion flag when page loads
-    window.addEventListener('load', () => {
-      console.log('Payment successful! Setting completion flag...');
-      
-      // Try to set the flag via external message
-      if (typeof chrome !== 'undefined' && chrome.runtime) {
-        chrome.runtime.sendMessage(
-          EXTENSION_ID,
-          { action: 'paymentCompleted' },
-          (response) => {
-            if (chrome.runtime.lastError) {
-              console.log('Note: Extension will detect payment on next open');
-            } else {
-              console.log('Payment flag set successfully');
-            }
-          }
-        );
+    // License Key System (simplified version for success page)
+    class LicenseKeyGenerator {
+      constructor() {
+        // IMPORTANT: This secret must match the one in your extension!
+        // Change this to your own random string
+        this.SECRET = 'OTD_2024_SECRET_KEY_CHANGE_THIS_X7Y9Z3';
+        this.PREFIX = 'OTHD';
       }
-    });
-    
-    function closeAndActivate() {
-      // One more attempt to set the flag
-      if (typeof chrome !== 'undefined' && chrome.runtime) {
-        chrome.runtime.sendMessage(
-          EXTENSION_ID,
-          { action: 'paymentCompleted' },
-          () => {
-            // Close the window regardless of response
-            window.close();
-            
-            // If window.close() doesn't work
-            if (!window.closed) {
-              alert('Please close this tab manually and reopen the extension to activate Pro!');
-            }
-          }
-        );
-      } else {
-        window.close();
-        if (!window.closed) {
-          alert('Please close this tab manually and reopen the extension to activate Pro!');
+
+      generateKey() {
+        const timestamp = Date.now();
+        const random = Math.random().toString(36).substring(2, 10).toUpperCase();
+        
+        // Create checksum
+        const data = `${timestamp}-${random}`;
+        const checksum = this.createChecksum(data);
+        
+        // Format: OTHD-TIMESTAMP-RANDOM-CHECKSUM
+        return `${this.PREFIX}-${timestamp}-${random}-${checksum}`;
+      }
+
+      createChecksum(data) {
+        const combined = data + this.SECRET;
+        let hash = 0;
+        
+        for (let i = 0; i < combined.length; i++) {
+          const char = combined.charCodeAt(i);
+          hash = ((hash << 5) - hash) + char;
+          hash = hash & hash;
         }
+        
+        return Math.abs(hash).toString(36).substring(0, 8).toUpperCase();
       }
+    }
+
+    // Generate key when page loads
+    window.addEventListener('load', () => {
+      const generator = new LicenseKeyGenerator();
+      const key = generator.generateKey();
+      
+      document.getElementById('licenseKey').textContent = key;
+      
+      console.log('License key generated:', key);
+      console.log('Extension ID: cghomjpgeelkfnaomdfolmlfnciiflip');
+    });
+
+    // Copy key to clipboard
+    function copyKey() {
+      const keyElement = document.getElementById('licenseKey');
+      const key = keyElement.textContent;
+      const copyBtn = document.getElementById('copyBtn');
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(key).then(() => {
+        // Show success
+        copyBtn.textContent = '✅ Copied!';
+        copyBtn.classList.add('copied');
+        keyElement.style.background = '#d4edda';
+        keyElement.style.borderColor = '#28a745';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          copyBtn.textContent = '📋 Copy License Key';
+          copyBtn.classList.remove('copied');
+          keyElement.style.background = 'white';
+          keyElement.style.borderColor = '#667eea';
+        }, 2000);
+      });
     }
   </script>
 </body>
