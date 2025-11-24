@@ -28,6 +28,18 @@
       max-width: 500px;
       text-align: center;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.5s ease;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
     .success-icon {
@@ -53,50 +65,29 @@
       margin-bottom: 30px;
     }
     
-    .activate-btn {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      padding: 18px 40px;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin-bottom: 20px;
-      display: inline-block;
-      width: 100%;
-      max-width: 300px;
-    }
-    
-    .activate-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-    }
-    
-    .activate-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-    
     .status {
-      margin-top: 20px;
+      margin: 20px 0;
       padding: 15px;
       border-radius: 8px;
       font-size: 14px;
-      display: none;
+    }
+    
+    .status.loading {
+      background: #fff3cd;
+      color: #856404;
+      display: block;
     }
     
     .status.success {
       background: #d4edda;
       color: #155724;
-      display: block;
+      display: none;
     }
     
     .status.error {
       background: #f8d7da;
       color: #721c24;
-      display: block;
+      display: none;
     }
     
     .features {
@@ -124,7 +115,7 @@
     }
     
     .features li:before {
-      content: "✓ ";
+      content: "✅ ";
       color: #28a745;
       font-weight: bold;
       margin-right: 8px;
@@ -133,9 +124,9 @@
     .instructions {
       margin-top: 30px;
       padding: 20px;
-      background: #fff3cd;
+      background: #e7f3ff;
       border-radius: 12px;
-      color: #856404;
+      color: #004085;
       font-size: 14px;
       line-height: 1.6;
     }
@@ -146,15 +137,39 @@
       font-size: 16px;
     }
     
-    .support {
+    .btn {
       margin-top: 20px;
-      font-size: 13px;
-      color: #6c757d;
+      padding: 14px 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
     }
     
-    .support a {
-      color: #667eea;
-      text-decoration: none;
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
@@ -164,113 +179,126 @@
     <h1>Payment Successful!</h1>
     <p class="subtitle">Thank you for upgrading to Pro</p>
     
+    <div class="status loading" id="loadingStatus">
+      <div class="spinner"></div>
+      <strong>Activating Pro Features...</strong>
+      <p>Please wait while we activate your Pro account.</p>
+    </div>
+    
+    <div class="status success" id="successStatus">
+      <strong>✅ Pro Features Activated!</strong>
+      <p>Your Pro features are now active. You can close this page and return to the extension.</p>
+    </div>
+    
+    <div class="status error" id="errorStatus">
+      <strong>⚠️ Manual Activation Required</strong>
+      <p>Please open the extension and go to Settings → Manage License to complete activation.</p>
+    </div>
+    
     <div class="features">
       <h3>Your Pro Features:</h3>
       <ul>
-        <li>⭐ Dedicated Favorites Tab</li>
-        <li>📋 Copy Favorites to Clipboard</li>
-        <li>📄 Export as Text File</li>
-        <li>📕 Export as PDF</li>
-        <li>🎨 Beautiful Themes</li>
-        <li>📚 View up to 20 Events</li>
-        <li>🏷️ Category Filters</li>
+        <li>Dedicated Favorites Tab</li>
+        <li>Save Unlimited Events</li>
+        <li>Copy Favorites to Clipboard</li>
+        <li>Export as Text File</li>
+        <li>Export as PDF</li>
+        <li>Beautiful Themes (Dark, Vintage)</li>
+        <li>View up to 20 Events</li>
+        <li>Category Filters</li>
       </ul>
     </div>
     
-    <button class="activate-btn" id=cghomjpgeelkfnaomdfolmlfnciiflip"activateBtn">
-      ✨ Activate Pro Features Now
-    </button>
-    
-    <div class="status" id="status"></div>
-    
-    <div class="instructions">
-      <strong>📌 Important:</strong>
-      Click the "Activate Pro Features Now" button above to unlock all Pro features in your extension.
-      <br><br>
-      After activation, close this page and open the extension to enjoy your Pro features!
+    <div class="instructions" id="instructions" style="display: none;">
+      <strong>📌 Next Steps:</strong>
+      1. Close this page<br>
+      2. Open the "On This Day" extension<br>
+      3. Enjoy your Pro features!<br>
+      <br>
+      If Pro features don't appear, click the ⚙️ Settings button and then "Manage License".
     </div>
     
-    <div class="support">
-      Need help? Contact support or click "Manage License" in extension settings.
-    </div>
+    <a href="#" class="btn" id="closeBtn" style="display: none;">Close This Page</a>
   </div>
   
   <script>
-    const activateBtn = document.getElementById('activateBtn');
-    const status = document.getElementById('status');
-    
-    // Extension ID - Update this if your extension ID changes
+    // Extension ID - Pre-configured
     const EXTENSION_ID = 'cghomjpgeelkfnaomdfolmlfnciiflip';
     
-    activateBtn.addEventListener('click', async () => {
-      activateBtn.disabled = true;
-      activateBtn.textContent = 'Activating...';
-      
+    // Automatically activate Pro when page loads
+    async function activatePro() {
       try {
-        // Method 1: Try to communicate with extension via message
+        console.log('Attempting to activate Pro...');
+        console.log('Extension ID:', EXTENSION_ID);
+        
+        // Send message to extension with extension ID
         if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage) {
           chrome.runtime.sendMessage(
+            EXTENSION_ID, // Extension ID
             { action: 'activatePro' },
             (response) => {
               if (chrome.runtime.lastError) {
-                // Extension not found or can't communicate
-                showManualInstructions();
+                console.error('Could not send message to extension:', chrome.runtime.lastError);
+                showManualActivation();
               } else if (response && response.success) {
+                console.log('Pro activated successfully!');
                 showSuccess();
               } else {
-                showManualInstructions();
+                console.error('Activation failed:', response);
+                showManualActivation();
               }
             }
           );
         } else {
-          // Not in Chrome or extension context
-          showManualInstructions();
+          console.error('Chrome runtime not available');
+          showManualActivation();
         }
         
-        // Method 2: Set activation flag in localStorage as backup
-        localStorage.setItem('onThisDayProActivated', 'true');
-        localStorage.setItem('onThisDayProActivationDate', new Date().toISOString());
-        
-        // Show success after a delay
+        // Fallback: Show success after delay if message was sent
         setTimeout(() => {
-          showSuccess();
-        }, 1000);
+          const loadingStatus = document.getElementById('loadingStatus');
+          if (loadingStatus && loadingStatus.style.display !== 'none') {
+            // Assume it worked if no error was shown
+            if (document.getElementById('errorStatus').style.display !== 'block') {
+              showSuccess();
+            }
+          }
+        }, 3000);
         
       } catch (error) {
         console.error('Activation error:', error);
-        showManualInstructions();
+        showManualActivation();
+      }
+    }
+    
+    function showSuccess() {
+      document.getElementById('loadingStatus').style.display = 'none';
+      document.getElementById('successStatus').style.display = 'block';
+      document.getElementById('instructions').style.display = 'block';
+      document.getElementById('closeBtn').style.display = 'inline-block';
+    }
+    
+    function showManualActivation() {
+      document.getElementById('loadingStatus').style.display = 'none';
+      document.getElementById('errorStatus').style.display = 'block';
+      document.getElementById('instructions').style.display = 'block';
+      document.getElementById('closeBtn').style.display = 'inline-block';
+    }
+    
+    // Close button handler
+    document.getElementById('closeBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.close();
+      // If window.close() doesn't work (some browsers block it)
+      if (!window.closed) {
+        alert('Please close this tab manually and return to the extension.');
       }
     });
     
-    function showSuccess() {
-      status.className = 'status success';
-      status.innerHTML = `
-        ✅ Pro features activated successfully!<br>
-        Close this page and open your extension to start using Pro features.
-      `;
-      activateBtn.style.display = 'none';
-    }
-    
-    function showManualInstructions() {
-      status.className = 'status error';
-      status.innerHTML = `
-        ⚠️ Automatic activation not available.<br><br>
-        <strong>Manual Activation Steps:</strong><br>
-        1. Open the "On This Day" extension<br>
-        2. Click ⚙️ Settings<br>
-        3. Click "Manage License"<br>
-        4. Confirm to activate Pro features
-      `;
-      activateBtn.textContent = 'Try Again';
-      activateBtn.disabled = false;
-    }
-    
-    // Auto-attempt activation after 2 seconds
-    setTimeout(() => {
-      if (activateBtn && !activateBtn.disabled) {
-        activateBtn.click();
-      }
-    }, 2000);
+    // Auto-activate on page load
+    window.addEventListener('load', () => {
+      activatePro();
+    });
   </script>
 </body>
 </html>
