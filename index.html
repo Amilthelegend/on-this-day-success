@@ -259,7 +259,7 @@
       </div>
     </div>
     
-    <button class="close-btn" onclick="window.close()">Close & Activate Now</button>
+    <button class="close-btn" onclick="closeAndActivate()">Close This Tab</button>
   </div>
   
   <script>
@@ -274,14 +274,18 @@
 
       generateKey() {
         const timestamp = Date.now();
-        const random = Math.random().toString(36).substring(2, 10).toUpperCase();
+        
+        // Generate TWO random strings for more uniqueness
+        const random1 = Math.random().toString(36).substring(2, 10).toUpperCase();
+        const random2 = Math.random().toString(36).substring(2, 6).toUpperCase();
+        const combined = random1 + random2;
         
         // Create checksum
-        const data = `${timestamp}-${random}`;
+        const data = `${timestamp}-${combined}`;
         const checksum = this.createChecksum(data);
         
-        // Format: OTHD-TIMESTAMP-RANDOM-CHECKSUM
-        return `${this.PREFIX}-${timestamp}-${random}-${checksum}`;
+        // Format: OTHD-TIMESTAMP-RANDOMSTRING-CHECKSUM
+        return `${this.PREFIX}-${timestamp}-${combined}-${checksum}`;
       }
 
       createChecksum(data) {
@@ -306,6 +310,8 @@
       document.getElementById('licenseKey').textContent = key;
       
       console.log('License key generated:', key);
+      console.log('Timestamp:', Date.now());
+      console.log('Each key is unique due to timestamp + random values');
       console.log('Extension ID: cghomjpgeelkfnaomdfolmlfnciiflip');
     });
 
@@ -331,6 +337,20 @@
           keyElement.style.borderColor = '#667eea';
         }, 2000);
       });
+    }
+    
+    // Close button handler
+    function closeAndActivate() {
+      // Try to close the tab
+      window.close();
+      
+      // If window didn't close (blocked by browser), show helpful message
+      setTimeout(() => {
+        if (!document.hidden) {
+          // Window is still open
+          alert('✅ License Key Copied!\n\n📌 Next Steps:\n1. Close this tab manually\n2. Open the extension\n3. Go to Settings\n4. Paste your key and activate!\n\nYour key has been copied to clipboard.');
+        }
+      }, 100);
     }
   </script>
 </body>
